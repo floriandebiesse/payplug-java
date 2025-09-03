@@ -96,7 +96,6 @@ public class HttpClient {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.add(HttpHeaders.USER_AGENT, "test"); // TODO user agent nécessaire ?
         headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
 
         return headers;
