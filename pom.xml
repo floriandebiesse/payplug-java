@@ -5,7 +5,7 @@
 
     <groupId>com.github.flodeb</groupId>
     <artifactId>payplug-java</artifactId>
-    <version>0.4.3</version>
+    <version>0.5.0</version>
     <packaging>jar</packaging>
 
     <name>Payplug Lib for JAVA</name>
