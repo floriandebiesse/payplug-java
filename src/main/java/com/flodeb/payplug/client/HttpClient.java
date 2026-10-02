@@ -3,7 +3,7 @@ package com.flodeb.payplug.client;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.flodeb.payplug.core.PayplugConfiguration;
 import com.flodeb.payplug.exception.BadRequestException;
 import com.flodeb.payplug.exception.ForbiddenException;
@@ -46,7 +46,7 @@ public class HttpClient {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS);
-        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();

@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,8 +33,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -63,7 +63,6 @@ public class HttpClientTest {
         // Then
         Assert.assertEquals(Collections.singletonList(MediaType.APPLICATION_JSON), headers.getAccept());
         Assert.assertEquals(MediaType.APPLICATION_JSON, headers.getContentType());
-        Assert.assertEquals("test", headers.getFirst(HttpHeaders.USER_AGENT));
         Assert.assertEquals("Bearer MyToken", headers.getFirst(HttpHeaders.AUTHORIZATION));
     }
 

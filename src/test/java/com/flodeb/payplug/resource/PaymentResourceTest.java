@@ -11,14 +11,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.MockedStatic;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(APIRoutes.class)
+@RunWith(MockitoJUnitRunner.class)
 public class PaymentResourceTest {
 
     @InjectMocks
@@ -44,8 +43,6 @@ public class PaymentResourceTest {
     @Test
     public void shouldGetResource() throws PayplugException {
         // Given
-        PowerMockito.mockStatic(APIRoutes.class);
-
         PayplugConfiguration configuration = new PayplugConfiguration("8gf1fg7e1erg");
 
         Payment originalPayment = new Payment();
@@ -55,14 +52,16 @@ public class PaymentResourceTest {
         Payment realPayment = new Payment();
         realPayment.setId("NEW_ID");
 
-        when(APIRoutes.getRoute(APIRoutes.PAYMENT_RESOURCE, "OLD_ID")).thenReturn("http://payments.com/OLD_ID");
-        PowerMockito.when(httpClient.get(configuration, "http://payments.com/OLD_ID", Payment.class)).thenReturn(realPayment);
+        try (MockedStatic<APIRoutes> apiRoutes = mockStatic(APIRoutes.class)) {
+            apiRoutes.when(() -> APIRoutes.getRoute(APIRoutes.PAYMENT_RESOURCE, "OLD_ID")).thenReturn("http://payments.com/OLD_ID");
+            when(httpClient.get(configuration, "http://payments.com/OLD_ID", Payment.class)).thenReturn(realPayment);
 
-        // When
-        Payment retrievedPayment = paymentResource.getConsistentResource(configuration);
+            // When
+            Payment retrievedPayment = paymentResource.getConsistentResource(configuration);
 
-        // Then
-        Assert.assertEquals(realPayment, retrievedPayment);
-        Assert.assertEquals("NEW_ID", retrievedPayment.getId());
+            // Then
+            Assert.assertEquals(realPayment, retrievedPayment);
+            Assert.assertEquals("NEW_ID", retrievedPayment.getId());
+        }
     }
 }

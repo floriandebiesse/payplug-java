@@ -2,7 +2,7 @@ package com.flodeb.payplug.resource.factory;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.flodeb.payplug.exception.PayplugException;
 import com.flodeb.payplug.exception.UnknownAPIResourceException;
 import com.flodeb.payplug.model.Payment;
@@ -28,7 +28,7 @@ public class APIResourceFactory {
     public IAPIResource getResource(String content) throws PayplugException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS);
-        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
 
         try {
             Resource resource = objectMapper.readValue(content, Resource.class);
